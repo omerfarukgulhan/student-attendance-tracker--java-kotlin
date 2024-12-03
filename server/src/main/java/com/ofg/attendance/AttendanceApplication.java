@@ -64,7 +64,7 @@ public class AttendanceApplication {
                 user.setPassword(passwordEncoder.encode("P4ssword"));
                 user.setFirstName("faruk");
                 user.setLastName("gulhan");
-                user.setPhoneNumber("+905531234567");
+                user.setPhoneNumber("+905531234568");
                 user.setProfileImage("default.png");
                 user.setActive(true);
                 user.setRoles(roles);
