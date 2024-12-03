@@ -9,7 +9,7 @@ import com.ofg.attendance.model.entity.Role;
 import com.ofg.attendance.model.entity.User;
 import com.ofg.attendance.model.request.*;
 import com.ofg.attendance.model.response.UserResponse;
-import com.ofg.attendance.model.response.UsersListResponse;
+import com.ofg.attendance.model.response.UserResponseWithoutRoles;
 import com.ofg.attendance.repository.UserRepository;
 import com.ofg.attendance.service.abstracts.EmailService;
 import com.ofg.attendance.service.abstracts.FileService;
@@ -49,9 +49,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<UsersListResponse> getAllUsers(Pageable pageable) {
+    public Page<UserResponseWithoutRoles> getAllUsers(Pageable pageable) {
         return userRepository.findAllActiveUsers(pageable)
-                .map(UsersListResponse::new);
+                .map(UserResponseWithoutRoles::new);
     }
 
     @Override

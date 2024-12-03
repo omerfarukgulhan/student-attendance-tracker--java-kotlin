@@ -3,14 +3,14 @@ package com.ofg.attendance.service.abstracts;
 import com.ofg.attendance.model.entity.User;
 import com.ofg.attendance.model.request.*;
 import com.ofg.attendance.model.response.UserResponse;
-import com.ofg.attendance.model.response.UsersListResponse;
+import com.ofg.attendance.model.response.UserResponseWithoutRoles;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.UUID;
 
 public interface UserService {
-    Page<UsersListResponse> getAllUsers(Pageable pageable);
+    Page<UserResponseWithoutRoles> getAllUsers(Pageable pageable);
 
     UserResponse getUserResponseById(UUID userId);
 

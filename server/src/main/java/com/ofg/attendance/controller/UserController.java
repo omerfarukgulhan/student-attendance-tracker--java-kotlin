@@ -4,7 +4,7 @@ import com.ofg.attendance.core.util.results.ApiDataResponse;
 import com.ofg.attendance.core.util.results.ApiResponse;
 import com.ofg.attendance.model.request.*;
 import com.ofg.attendance.model.response.UserResponse;
-import com.ofg.attendance.model.response.UsersListResponse;
+import com.ofg.attendance.model.response.UserResponseWithoutRoles;
 import com.ofg.attendance.service.abstracts.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,8 +39,8 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<ApiDataResponse<Page<UsersListResponse>>> getAllUsers(Pageable pageable) {
-        Page<UsersListResponse> users = userService.getAllUsers(pageable);
+    public ResponseEntity<ApiDataResponse<Page<UserResponseWithoutRoles>>> getAllUsers(Pageable pageable) {
+        Page<UserResponseWithoutRoles> users = userService.getAllUsers(pageable);
         return ResponseUtil.createApiDataResponse(users, USERS_FETCH_SUCCESS, HttpStatus.OK);
     }
 
