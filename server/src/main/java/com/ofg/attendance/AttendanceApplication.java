@@ -38,6 +38,20 @@ public class AttendanceApplication {
                         return roleRepository.save(role);
                     });
 
+            roleRepository.findByName("ROLE_INSTRUCTOR")
+                    .orElseGet(() -> {
+                        Role role = new Role();
+                        role.setName("ROLE_INSTRUCTOR");
+                        return roleRepository.save(role);
+                    });
+
+            roleRepository.findByName("ROLE_STUDENT")
+                    .orElseGet(() -> {
+                        Role role = new Role();
+                        role.setName("ROLE_STUDENT");
+                        return roleRepository.save(role);
+                    });
+
             if (userRepository.findByEmail("omer@gmail.com").isEmpty()) {
                 Set<Role> roles = new HashSet<>();
                 roles.add(adminRole);
