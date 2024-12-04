@@ -31,5 +31,6 @@ public class AppProperties {
     public static class Storage {
         private String root = "uploads";
         private String profile = "profile";
+        private String qr = "qr";
     }
 }
