@@ -1,5 +1,6 @@
 package com.ofg.attendance.service.abstracts;
 
+import com.ofg.attendance.model.entity.Instructor;
 import com.ofg.attendance.model.request.InstructorCreateRequest;
 import com.ofg.attendance.model.request.InstructorUpdateRequest;
 import com.ofg.attendance.model.response.InstructorResponse;
@@ -12,6 +13,8 @@ public interface InstructorService {
     Page<InstructorResponse> getAllInstructors(Pageable pageable);
 
     InstructorResponse getInstructorById(UUID instructorId);
+
+    Instructor getInstructorEntityByUserId(UUID userId);
 
     InstructorResponse addInstructor(InstructorCreateRequest instructorCreateRequest);
 

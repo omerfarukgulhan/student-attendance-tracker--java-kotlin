@@ -49,6 +49,12 @@ public class InstructorServiceImpl implements InstructorService {
     }
 
     @Override
+    public Instructor getInstructorEntityByUserId(UUID userId) {
+        return instructorRepository.findByUserId(userId)
+                .orElseThrow(() -> new NotFoundException(userId));
+    }
+
+    @Override
     public InstructorResponse addInstructor(InstructorCreateRequest instructorCreateRequest) {
         User user = userService.getUserEntityById(instructorCreateRequest.userId());
         Instructor instructor = new Instructor();
