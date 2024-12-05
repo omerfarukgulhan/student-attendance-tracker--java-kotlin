@@ -35,6 +35,11 @@ public class SecurityConfiguration {
         http
                 .authorizeHttpRequests((authentication) ->
                         authentication
+                                .requestMatchers(HttpMethod.GET, "/students").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/students/{studentId}").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/students").hasAuthority("ROLE_ADMIN")
+                                .requestMatchers(HttpMethod.DELETE, "/students/{studentId}").hasAuthority("ROLE_ADMIN")
+
                                 .requestMatchers(HttpMethod.GET, "/lectures/course/{courseId}").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/lectures/{lectureId}").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/lectures").hasAuthority("ROLE_INSTRUCTOR")
