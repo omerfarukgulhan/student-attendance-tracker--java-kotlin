@@ -43,9 +43,15 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public CourseResponse getCourseById(UUID courseId) {
+    public CourseResponse getCourseResponseById(UUID courseId) {
         return courseRepository.findById(courseId)
                 .map(CourseResponse::new)
+                .orElseThrow(() -> new NotFoundException(courseId));
+    }
+
+    @Override
+    public Course getCourseEntityById(UUID courseId) {
+        return courseRepository.findById(courseId)
                 .orElseThrow(() -> new NotFoundException(courseId));
     }
 

@@ -51,7 +51,7 @@ public class CourseController {
 
     @GetMapping("/{courseId}")
     public ResponseEntity<ApiDataResponse<CourseResponse>> getCourseById(@PathVariable UUID courseId) {
-        CourseResponse course = courseService.getCourseById(courseId);
+        CourseResponse course = courseService.getCourseResponseById(courseId);
         return ResponseUtil.createApiDataResponse(course, COURSE_FETCH_SUCCESS, HttpStatus.OK);
     }
 
