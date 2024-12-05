@@ -26,6 +26,6 @@ public class Lecture extends BaseEntity {
 
     private LocalDateTime endTime;
 
-    @OneToOne(mappedBy = "lecture")
+    @OneToOne(mappedBy = "lecture", cascade = CascadeType.ALL, orphanRemoval = true)
     private QRCode qrCode;
 }
