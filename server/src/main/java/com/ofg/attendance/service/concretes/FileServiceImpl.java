@@ -41,12 +41,13 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public String saveBase64StringAsFile(String imageType, String image) {
-        String filename = UUID.randomUUID().toString();
+    public String saveBase64StringAsFile(String imageType, String encodedImage) {
+        String filename = UUID.randomUUID() + ".png";
         Path path = getImagePath(imageType, filename);
 
         try (OutputStream outputStream = Files.newOutputStream(path)) {
-            outputStream.write(decodedImage(image));
+            byte[] imageBytes = decodedImage(encodedImage);
+            outputStream.write(imageBytes);
             return filename;
         } catch (IOException e) {
             throw new FileServiceException("save64");
@@ -55,6 +56,17 @@ public class FileServiceImpl implements FileService {
 
     private byte[] decodedImage(String encodedImage) {
         return Base64.getDecoder().decode(encodedImage.split(",")[1]);
+    }
+
+    @Override
+    public String encodeImageToBase64(Path filePath) {
+        byte[] fileBytes = null;
+        try {
+            fileBytes = Files.readAllBytes(filePath);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return "data:image/png;base64," + java.util.Base64.getEncoder().encodeToString(fileBytes);
     }
 
     @Override
@@ -77,6 +89,7 @@ public class FileServiceImpl implements FileService {
     private Path getImagePath(String imageType, String filename) {
         String folder = switch (imageType) {
             case "profile" -> appProperties.getStorage().getProfile();
+            case "qr" -> appProperties.getStorage().getQr();
             default -> throw new IllegalArgumentException("Unknown image type: " + imageType);
         };
         return Paths.get(appProperties.getStorage().getRoot(), folder, filename);
