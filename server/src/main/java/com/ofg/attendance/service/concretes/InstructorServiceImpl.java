@@ -79,6 +79,7 @@ public class InstructorServiceImpl implements InstructorService {
     @Override
     public void deleteInstructor(UUID userId, UUID instructorId) {
         getAndValidateInstructorOwnership(userId, instructorId);
+        userRoleService.revokeRoleFromUser(userId, "ROLE_INSTRUCTOR");
         instructorRepository.deleteById(instructorId);
     }
 
