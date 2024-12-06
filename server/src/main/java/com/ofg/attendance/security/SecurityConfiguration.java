@@ -35,6 +35,10 @@ public class SecurityConfiguration {
         http
                 .authorizeHttpRequests((authentication) ->
                         authentication
+                                .requestMatchers(HttpMethod.GET, "/attendances/lecture/{lectureId}").hasAuthority("ROLE_INSTRUCTOR")
+                                .requestMatchers(HttpMethod.GET, "/attendances/{attendanceId}").hasAuthority("ROLE_INSTRUCTOR")
+                                .requestMatchers(HttpMethod.POST, "/attendances/{qrContent}").hasAuthority("ROLE_STUDENT")
+
                                 .requestMatchers(HttpMethod.GET, "/students").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/students/{studentId}").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/students").hasAuthority("ROLE_ADMIN")
@@ -50,6 +54,7 @@ public class SecurityConfiguration {
                                 .requestMatchers(HttpMethod.GET, "/courses/{courseId}").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/courses/instructor/{instructorId}").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/courses").hasAuthority("ROLE_INSTRUCTOR")
+                                .requestMatchers(HttpMethod.POST, "/courses/assign-student").hasAuthority("ROLE_INSTRUCTOR")
                                 .requestMatchers(HttpMethod.PUT, "/courses/{courseId}").hasAuthority("ROLE_INSTRUCTOR")
                                 .requestMatchers(HttpMethod.DELETE, "/courses/{courseId}").hasAuthority("ROLE_INSTRUCTOR")
 

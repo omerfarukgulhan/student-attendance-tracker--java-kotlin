@@ -3,6 +3,7 @@ package com.ofg.attendance.controller;
 import com.ofg.attendance.core.util.response.ResponseUtil;
 import com.ofg.attendance.core.util.results.ApiDataResponse;
 import com.ofg.attendance.core.util.results.ApiResponse;
+import com.ofg.attendance.model.request.AssignStudentToCourseRequest;
 import com.ofg.attendance.model.request.CourseCreateRequest;
 import com.ofg.attendance.model.request.CourseUpdateRequest;
 import com.ofg.attendance.model.response.CourseResponse;
@@ -27,6 +28,7 @@ public class CourseController {
     private static final String COURSES_FETCH_SUCCESS = "app.msg.courses.fetch.success";
     private static final String COURSE_FETCH_SUCCESS = "app.msg.course.fetch.success";
     private static final String COURSE_CREATE_SUCCESS = "app.msg.course.create.success";
+    private static final String STUDENT_ASSIGN_SUCCESS = "app.msg.student.assign.success";
     private static final String COURSE_UPDATE_SUCCESS = "app.msg.course.update.success";
     private static final String COURSE_DELETE_SUCCESS = "app.msg.course.delete.success";
 
@@ -61,6 +63,13 @@ public class CourseController {
             @Valid @RequestBody CourseCreateRequest courseCreateRequest) {
         CourseResponse course = courseService.addCourse(currentUser.getId(), courseCreateRequest);
         return ResponseUtil.createApiDataResponse(course, COURSE_CREATE_SUCCESS, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/assign-student")
+    public ResponseEntity<ApiResponse> assignStudentToCourse(
+            @Valid @RequestBody AssignStudentToCourseRequest assignStudentToCourseRequest) {
+        courseService.assignStudentToCourse(assignStudentToCourseRequest);
+        return ResponseUtil.createApiResponse(STUDENT_ASSIGN_SUCCESS, HttpStatus.CREATED);
     }
 
     @PutMapping("/{courseId}")
