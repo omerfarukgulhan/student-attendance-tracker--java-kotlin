@@ -32,7 +32,7 @@ public class AttendanceServiceImpl implements AttendanceService {
     }
 
     @Override
-    public Page<AttendanceResponse> getAttendanceByLectureId(UUID lectureId, Pageable pageable) {
+    public Page<AttendanceResponse> getAttendancesByLectureId(UUID lectureId, Pageable pageable) {
         return attendanceRepository.findByLectureId(lectureId, pageable)
                 .orElseThrow(() -> new NotFoundException(lectureId))
                 .map(AttendanceResponse::new);

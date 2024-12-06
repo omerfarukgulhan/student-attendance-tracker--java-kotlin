@@ -33,7 +33,7 @@ public class AttendanceController {
     public ResponseEntity<ApiDataResponse<Page<AttendanceResponse>>> getAllAttendancesByLectureId(
             @PathVariable UUID lectureId,
             Pageable pageable) {
-        Page<AttendanceResponse> attendances = attendanceService.getAttendanceByLectureId(lectureId, pageable);
+        Page<AttendanceResponse> attendances = attendanceService.getAttendancesByLectureId(lectureId, pageable);
         return ResponseUtil.createApiDataResponse(attendances, ATTENDANCES_FETCH_SUCCESS, HttpStatus.OK);
     }
 
