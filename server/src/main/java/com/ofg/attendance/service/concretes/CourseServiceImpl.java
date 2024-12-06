@@ -4,12 +4,15 @@ import com.ofg.attendance.exception.authentication.UnauthorizedException;
 import com.ofg.attendance.exception.general.NotFoundException;
 import com.ofg.attendance.model.entity.Course;
 import com.ofg.attendance.model.entity.Instructor;
+import com.ofg.attendance.model.entity.Student;
+import com.ofg.attendance.model.request.AssignStudentToCourseRequest;
 import com.ofg.attendance.model.request.CourseCreateRequest;
 import com.ofg.attendance.model.request.CourseUpdateRequest;
 import com.ofg.attendance.model.response.CourseResponse;
 import com.ofg.attendance.repository.CourseRepository;
 import com.ofg.attendance.service.abstracts.CourseService;
 import com.ofg.attendance.service.abstracts.InstructorService;
+import com.ofg.attendance.service.abstracts.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,12 +25,15 @@ import java.util.UUID;
 public class CourseServiceImpl implements CourseService {
     private final CourseRepository courseRepository;
     private final InstructorService instructorService;
+    private final StudentService studentService;
 
     @Autowired
     public CourseServiceImpl(CourseRepository courseRepository,
-                             InstructorService instructorService) {
+                             InstructorService instructorService,
+                             StudentService studentService) {
         this.courseRepository = courseRepository;
         this.instructorService = instructorService;
+        this.studentService = studentService;
     }
 
     @Override
@@ -66,6 +72,17 @@ public class CourseServiceImpl implements CourseService {
 
         Course savedCourse = courseRepository.save(course);
         return new CourseResponse(savedCourse);
+    }
+
+    @Override
+    public void assignStudentToCourse(AssignStudentToCourseRequest assignStudentToCourseRequest) {
+        Student student = studentService.getStudentEntityByUserId(assignStudentToCourseRequest.userId());
+        Course course = getCourseEntityById(assignStudentToCourseRequest.courseId());
+
+        course.getStudents().add(student);
+        courseRepository.save(course);
+
+        studentService.addStudentToCourse(student, course);
     }
 
     @Override

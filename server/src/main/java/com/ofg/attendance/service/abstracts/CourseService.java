@@ -1,6 +1,7 @@
 package com.ofg.attendance.service.abstracts;
 
 import com.ofg.attendance.model.entity.Course;
+import com.ofg.attendance.model.request.AssignStudentToCourseRequest;
 import com.ofg.attendance.model.request.CourseCreateRequest;
 import com.ofg.attendance.model.request.CourseUpdateRequest;
 import com.ofg.attendance.model.response.CourseResponse;
@@ -19,6 +20,8 @@ public interface CourseService {
     Course getCourseEntityById(UUID courseId);
 
     CourseResponse addCourse(UUID userId, CourseCreateRequest createRequest);
+
+    void assignStudentToCourse(AssignStudentToCourseRequest assignStudentToCourseRequest);
 
     CourseResponse updateCourse(UUID userId, UUID courseId, CourseUpdateRequest CourseUpdateRequest);
 
