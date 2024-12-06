@@ -1,5 +1,7 @@
 package com.ofg.attendance.service.abstracts;
 
+import com.ofg.attendance.model.entity.Course;
+import com.ofg.attendance.model.entity.Student;
 import com.ofg.attendance.model.request.StudentCreateRequest;
 import com.ofg.attendance.model.response.StudentResponse;
 import org.springframework.data.domain.Page;
@@ -14,7 +16,11 @@ public interface StudentService {
 
     StudentResponse getStudentById(UUID studentId);
 
+    Student getStudentEntityByUserId(UUID userId);
+
     StudentResponse addStudent(StudentCreateRequest studentCreateRequest);
+
+    void addStudentToCourse(Student student, Course course);
 
     void deleteStudent(UUID studentId);
 }

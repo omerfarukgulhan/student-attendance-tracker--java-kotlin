@@ -1,6 +1,7 @@
 package com.ofg.attendance.service.concretes;
 
 import com.ofg.attendance.exception.general.NotFoundException;
+import com.ofg.attendance.model.entity.Course;
 import com.ofg.attendance.model.entity.Student;
 import com.ofg.attendance.model.entity.User;
 import com.ofg.attendance.model.request.AssignRoleRequest;
@@ -52,6 +53,12 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    public Student getStudentEntityByUserId(UUID userId) {
+        return studentRepository.findByUserId(userId)
+                .orElseThrow(() -> new NotFoundException(userId));
+    }
+
+    @Override
     public StudentResponse addStudent(StudentCreateRequest studentCreateRequest) {
         User user = userService.getUserEntityById(studentCreateRequest.userId());
         Student student = new Student();
@@ -61,6 +68,12 @@ public class StudentServiceImpl implements StudentService {
         AssignRoleRequest assignRoleRequest = new AssignRoleRequest(studentCreateRequest.userId(), "ROLE_STUDENT");
         userRoleService.assignRoleToUser(assignRoleRequest);
         return new StudentResponse(savedStudent);
+    }
+
+    @Override
+    public void addStudentToCourse(Student student, Course course) {
+        student.getCourses().add(course);
+        studentRepository.save(student);
     }
 
     public static String generateEnrollmentNumber() {
