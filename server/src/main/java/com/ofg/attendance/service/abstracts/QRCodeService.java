@@ -10,5 +10,7 @@ public interface QRCodeService {
 
     QRCode getQRCodeByLectureId(UUID lectureId);
 
+    QRCode getQRCodeByContent(String qrCodeContent);
+
     void deleteQRCodeImage(QRCode qrCode);
 }

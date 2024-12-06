@@ -4,6 +4,7 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
+import com.ofg.attendance.exception.general.NotFoundException;
 import com.ofg.attendance.model.entity.Lecture;
 import com.ofg.attendance.model.entity.QRCode;
 import com.ofg.attendance.repository.QRCodeRepository;
@@ -41,7 +42,7 @@ public class QRCodeServiceImpl implements QRCodeService {
     }
 
     private String generateQRCodeContent(Lecture lecture) {
-        return "attendance_link_for_lecture_" + lecture.getId();
+        return lecture.getId().toString();
     }
 
     private BitMatrix createQRCodeMatrix(String qrCodeContent) {
@@ -77,7 +78,13 @@ public class QRCodeServiceImpl implements QRCodeService {
     @Override
     public QRCode getQRCodeByLectureId(UUID lectureId) {
         return qrCodeRepository.findByLectureId(lectureId)
-                .orElseThrow(() -> new RuntimeException("QR Code not found for this lecture"));
+                .orElseThrow(() -> new NotFoundException(lectureId));
+    }
+
+    @Override
+    public QRCode getQRCodeByContent(String qrCodeContent) {
+        return qrCodeRepository.findByQrCodeContent(qrCodeContent)
+                .orElseThrow(() -> new NotFoundException(qrCodeContent));
     }
 
     @Override
