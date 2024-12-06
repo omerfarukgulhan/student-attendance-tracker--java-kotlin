@@ -43,6 +43,16 @@ public class CourseController {
         return ResponseUtil.createApiDataResponse(courses, COURSES_FETCH_SUCCESS, HttpStatus.OK);
     }
 
+    @GetMapping("/student/{studentId}")
+    public ResponseEntity<ApiDataResponse<Page<CourseResponse>>> getAllCoursesByStudentId(
+            @AuthenticationPrincipal CurrentUser currentUser,
+            @PathVariable UUID studentId,
+            Pageable pageable) {
+        Page<CourseResponse> courses = courseService.getAllCoursesByStudentId(currentUser.getId(), studentId, pageable);
+        return ResponseUtil.createApiDataResponse(courses, COURSES_FETCH_SUCCESS, HttpStatus.OK);
+    }
+
+
     @GetMapping("instructor/{instructorId}")
     public ResponseEntity<ApiDataResponse<Page<CourseResponse>>> getAllCoursesByInstructorId(
             @PathVariable UUID instructorId,

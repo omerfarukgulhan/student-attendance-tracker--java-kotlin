@@ -43,6 +43,21 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    public Page<CourseResponse> getAllCoursesByStudentId(UUID userId, UUID studentId, Pageable pageable) {
+        validateStudentOwnership(userId, studentId);
+        return courseRepository.findAllByStudentId(studentId, pageable)
+                .orElseThrow(() -> new NotFoundException(studentId))
+                .map(CourseResponse::new);
+    }
+
+    private void validateStudentOwnership(UUID userId, UUID studentId) {
+        Student student = studentService.getStudentEntityByUserId(userId);
+        if (!Objects.equals(student.getUser().getId(), userId)) {
+            throw new UnauthorizedException();
+        }
+    }
+
+    @Override
     public Page<CourseResponse> getAllCoursesByInstructorId(UUID instructorId, Pageable pageable) {
         return courseRepository.findAllByInstructorId(instructorId, pageable)
                 .map(CourseResponse::new);
