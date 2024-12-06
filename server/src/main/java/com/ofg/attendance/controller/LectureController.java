@@ -45,7 +45,7 @@ public class LectureController {
 
     @GetMapping("/{lectureId}")
     public ResponseEntity<ApiDataResponse<LectureResponse>> getLectureById(@PathVariable UUID lectureId) {
-        LectureResponse lecture = lectureService.getLectureById(lectureId);
+        LectureResponse lecture = lectureService.getLectureResponseById(lectureId);
         return ResponseUtil.createApiDataResponse(lecture, LECTURE_FETCH_SUCCESS, HttpStatus.OK);
     }
 

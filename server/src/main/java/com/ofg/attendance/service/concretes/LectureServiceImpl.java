@@ -48,9 +48,15 @@ public class LectureServiceImpl implements LectureService {
     }
 
     @Override
-    public LectureResponse getLectureById(UUID lectureId) {
+    public LectureResponse getLectureResponseById(UUID lectureId) {
         return lectureRepository.findById(lectureId)
                 .map(LectureResponse::new)
+                .orElseThrow(() -> new NotFoundException(lectureId));
+    }
+
+    @Override
+    public Lecture getLectureEntityById(UUID lectureId) {
+        return lectureRepository.findById(lectureId)
                 .orElseThrow(() -> new NotFoundException(lectureId));
     }
 
