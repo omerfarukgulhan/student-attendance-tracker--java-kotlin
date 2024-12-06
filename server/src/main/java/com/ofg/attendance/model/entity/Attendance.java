@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "courses")
+@Table(name = "attendances")
 @Data
 public class Attendance extends BaseEntity {
     @Id
