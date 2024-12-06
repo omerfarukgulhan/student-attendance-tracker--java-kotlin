@@ -13,9 +13,14 @@ import java.util.UUID;
 public interface AttendanceRepository extends JpaRepository<Attendance, UUID> {
     Optional<Page<Attendance>> findByLectureId(UUID lectureId, Pageable pageable);
 
+    @Query("SELECT a FROM Attendance a WHERE a.lecture.course.id = :courseId")
+    Optional<Page<Attendance>> findAllByCourseId(@Param("courseId") UUID courseId, Pageable pageable);
+
+    @Query("SELECT a FROM Attendance a WHERE a.student.user.id = :userId")
+    Optional<Page<Attendance>> findByStudentUserId(@Param("userId") UUID userId, Pageable pageable);
+    
     @Query("SELECT CASE WHEN COUNT(a) > 0 THEN true ELSE false END " +
             "FROM Attendance a " +
             "WHERE a.student.id = :studentId AND a.lecture.id = :lectureId")
-    boolean existsByStudentIdAndLectureId(@Param("studentId") UUID studentId,
-                                          @Param("lectureId") UUID lectureId);
+    boolean existsByStudentIdAndLectureId(@Param("studentId") UUID studentId, @Param("lectureId") UUID lectureId);
 }

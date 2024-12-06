@@ -7,7 +7,11 @@ import org.springframework.data.domain.Pageable;
 import java.util.UUID;
 
 public interface AttendanceService {
-    Page<AttendanceResponse> getAttendancesByLectureId(UUID lectureId, Pageable pageable);
+    Page<AttendanceResponse> getAttendancesByLectureId(UUID userId, UUID lectureId, Pageable pageable);
+
+    Page<AttendanceResponse> getAllAttendancesByCourseId(UUID userId, UUID courseId, Pageable pageable);
+
+    Page<AttendanceResponse> getAllAttendancesByStudentId(UUID userId, Pageable pageable);
 
     AttendanceResponse getAttendanceById(UUID attendanceId);
 

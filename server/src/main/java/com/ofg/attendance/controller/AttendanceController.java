@@ -31,9 +31,27 @@ public class AttendanceController {
 
     @GetMapping("/lecture/{lectureId}")
     public ResponseEntity<ApiDataResponse<Page<AttendanceResponse>>> getAllAttendancesByLectureId(
+            @AuthenticationPrincipal CurrentUser currentUser,
             @PathVariable UUID lectureId,
             Pageable pageable) {
-        Page<AttendanceResponse> attendances = attendanceService.getAttendancesByLectureId(lectureId, pageable);
+        Page<AttendanceResponse> attendances = attendanceService.getAttendancesByLectureId(currentUser.getId(), lectureId, pageable);
+        return ResponseUtil.createApiDataResponse(attendances, ATTENDANCES_FETCH_SUCCESS, HttpStatus.OK);
+    }
+
+    @GetMapping("/course/{courseId}")
+    public ResponseEntity<ApiDataResponse<Page<AttendanceResponse>>> getAllAttendancesByCourseId(
+            @AuthenticationPrincipal CurrentUser currentUser,
+            @PathVariable UUID courseId,
+            Pageable pageable) {
+        Page<AttendanceResponse> attendances = attendanceService.getAllAttendancesByCourseId(currentUser.getId(), courseId, pageable);
+        return ResponseUtil.createApiDataResponse(attendances, ATTENDANCES_FETCH_SUCCESS, HttpStatus.OK);
+    }
+
+    @GetMapping("/student")
+    public ResponseEntity<ApiDataResponse<Page<AttendanceResponse>>> getAllAttendancesByStudentId(
+            @AuthenticationPrincipal CurrentUser currentUser,
+            Pageable pageable) {
+        Page<AttendanceResponse> attendances = attendanceService.getAllAttendancesByStudentId(currentUser.getId(), pageable);
         return ResponseUtil.createApiDataResponse(attendances, ATTENDANCES_FETCH_SUCCESS, HttpStatus.OK);
     }
 
