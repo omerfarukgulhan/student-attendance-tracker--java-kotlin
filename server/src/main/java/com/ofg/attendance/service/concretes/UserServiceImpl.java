@@ -105,6 +105,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void updateUserRoles(UUID userId, User user) {
+        User existingUser = findUserById(userId);
+        existingUser.setRoles(user.getRoles());
+        userRepository.save(existingUser);
+    }
+
+    @Override
     public void updatePassword(UUID userId, UserPasswordUpdateRequest userPasswordUpdateRequest) {
         User user = findUserById(userId);
         validateOldPassword(user, userPasswordUpdateRequest.oldPassword());

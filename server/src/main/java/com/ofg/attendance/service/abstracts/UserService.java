@@ -22,6 +22,8 @@ public interface UserService {
 
     UserResponse updateUser(UUID userId, UserUpdateRequest userUpdateRequest);
 
+    void updateUserRoles(UUID userId, User user);
+
     UserResponse activateUser(String token);
 
     void updatePassword(UUID userId, UserPasswordUpdateRequest userPasswordUpdateRequest);

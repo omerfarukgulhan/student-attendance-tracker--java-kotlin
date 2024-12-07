@@ -30,28 +30,21 @@ public class UserRoleServiceImpl implements UserRoleService {
         User user = userService.getUserEntityById(assignRoleRequest.userId());
         if (!user.getRoles().contains(role)) {
             user.getRoles().add(role);
-            userService.updateUser(user.getId(), buildUserUpdateRequest(user));
+            userService.updateUserRoles(user.getId(), user);
         } else {
             throw new UniqueConstraintViolationException();
         }
     }
-
+    
     @Override
     public void revokeRoleFromUser(UUID userId, String roleName) {
         Role role = roleService.getRoleByName(roleName);
         User user = userService.getUserEntityById(userId);
         if (user.getRoles().contains(role)) {
             user.getRoles().remove(role);
-            userService.updateUser(user.getId(), buildUserUpdateRequest(user));
+            userService.updateUserRoles(user.getId(), user);
         } else {
-            throw new NotFoundException(roleName);
+            throw new NotFoundException("Role " + roleName + " not assigned to user.");
         }
-    }
-
-    private UserUpdateRequest buildUserUpdateRequest(User user) {
-        return new UserUpdateRequest(user.getFirstName(),
-                user.getLastName(),
-                user.getPhoneNumber(),
-                null);
     }
 }
