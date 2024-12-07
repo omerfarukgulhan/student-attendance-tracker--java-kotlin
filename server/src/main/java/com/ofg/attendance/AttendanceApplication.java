@@ -1,6 +1,5 @@
 package com.ofg.attendance;
 
-import com.ofg.attendance.model.entity.Lecture;
 import com.ofg.attendance.model.entity.Role;
 import com.ofg.attendance.model.entity.User;
 import com.ofg.attendance.model.request.*;
@@ -112,7 +111,6 @@ public class AttendanceApplication {
         if (userRepository.findByEmail("instructor1@gmail.com").isEmpty()) {
             Set<Role> roles = new HashSet<>();
             roles.add(userRole);
-            roles.add(instructorRole);
 
             User user = new User();
             user.setEmail("instructor1@gmail.com");
@@ -140,7 +138,6 @@ public class AttendanceApplication {
         if (userRepository.findByEmail("instructor2@gmail.com").isEmpty()) {
             Set<Role> roles = new HashSet<>();
             roles.add(userRole);
-            roles.add(instructorRole);
 
             User user = new User();
             user.setEmail("instructor2@gmail.com");
@@ -177,7 +174,6 @@ public class AttendanceApplication {
         if (userRepository.findByEmail("student1@gmail.com").isEmpty()) {
             Set<Role> roles = new HashSet<>();
             roles.add(userRole);
-            roles.add(studentRole);
 
             User user = new User();
             user.setEmail("student1@gmail.com");
@@ -200,7 +196,6 @@ public class AttendanceApplication {
         if (userRepository.findByEmail("student2@gmail.com").isEmpty()) {
             Set<Role> roles = new HashSet<>();
             roles.add(userRole);
-            roles.add(studentRole);
 
             User user = new User();
             user.setEmail("student2@gmail.com");
@@ -221,7 +216,6 @@ public class AttendanceApplication {
         if (userRepository.findByEmail("student3@gmail.com").isEmpty()) {
             Set<Role> roles = new HashSet<>();
             roles.add(userRole);
-            roles.add(studentRole);
 
             User user = new User();
             user.setEmail("student3@gmail.com");
