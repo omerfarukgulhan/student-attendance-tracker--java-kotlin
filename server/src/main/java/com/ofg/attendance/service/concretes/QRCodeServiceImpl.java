@@ -7,6 +7,7 @@ import com.google.zxing.qrcode.QRCodeWriter;
 import com.ofg.attendance.exception.general.NotFoundException;
 import com.ofg.attendance.model.entity.Lecture;
 import com.ofg.attendance.model.entity.QRCode;
+import com.ofg.attendance.model.response.QRCodeResponse;
 import com.ofg.attendance.repository.QRCodeRepository;
 import com.ofg.attendance.service.abstracts.FileService;
 import com.ofg.attendance.service.abstracts.QRCodeService;
@@ -76,8 +77,9 @@ public class QRCodeServiceImpl implements QRCodeService {
     }
 
     @Override
-    public QRCode getQRCodeByLectureId(UUID lectureId) {
+    public QRCodeResponse getQRCodeByLectureId(UUID lectureId) {
         return qrCodeRepository.findByLectureId(lectureId)
+                .map(QRCodeResponse::new)
                 .orElseThrow(() -> new NotFoundException(lectureId));
     }
 
