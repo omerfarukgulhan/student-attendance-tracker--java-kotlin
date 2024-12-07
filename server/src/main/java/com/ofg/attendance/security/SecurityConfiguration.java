@@ -35,6 +35,8 @@ public class SecurityConfiguration {
         http
                 .authorizeHttpRequests((authentication) ->
                         authentication
+                                .requestMatchers(HttpMethod.GET, "/qr-codes/{lectureId}").hasAuthority("ROLE_INSTRUCTOR")
+
                                 .requestMatchers(HttpMethod.GET, "/attendances/lecture/{lectureId}").hasAuthority("ROLE_INSTRUCTOR")
                                 .requestMatchers(HttpMethod.GET, "/attendances/{attendanceId}").hasAuthority("ROLE_INSTRUCTOR")
                                 .requestMatchers(HttpMethod.POST, "/attendances/{qrContent}").hasAuthority("ROLE_STUDENT")
